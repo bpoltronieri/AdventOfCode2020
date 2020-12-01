@@ -19,12 +19,36 @@ namespace AoC2020.Days
 
         public string PartOne()
         {
-            throw new NotImplementedException();
+            for (var i = 0; i < input.Length-1; i++)
+            {
+                var val1 = int.Parse(input[i]);
+                for (var j = i+1; j < input.Length; j++)
+                {
+                    var val2 = int.Parse(input[j]);
+                    if (val1 + val2 == 2020)
+                        return (val1*val2).ToString();
+                }
+            }
+            return "";
         }
 
         public string PartTwo()
         {
-            throw new NotImplementedException();
+            for (var i = 0; i < input.Length-2; i++)
+            {
+                var val1 = int.Parse(input[i]);
+                for (var j = i+1; j < input.Length-1; j++)
+                {
+                    var val2 = int.Parse(input[j]);
+                    for (var k = j+1; k < input.Length-1; k++)
+                        {
+                        var val3 = int.Parse(input[k]);
+                        if (val1 + val2 + val3 == 2020)
+                            return (val1*val2*val3).ToString();
+                        }
+                }
+            }
+            return "";
         }
     }
 }
