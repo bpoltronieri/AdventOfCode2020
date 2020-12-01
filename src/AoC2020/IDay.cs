@@ -1,5 +1,3 @@
-using System;
-
 namespace AoC2020
 {
     interface IDay
