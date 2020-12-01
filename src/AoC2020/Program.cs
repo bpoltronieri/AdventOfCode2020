@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Reflection;
 
 namespace AoC2020
 {
@@ -28,7 +29,10 @@ namespace AoC2020
                 var typeName = "AoC2020.Days." + dayName;
                 var dayType = Type.GetType(typeName);
 
-                var inputFile = Directory.GetFiles(@"../../Input", dayName + ".txt")[0];
+                var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                path = Path.GetFullPath(Path.Combine(path, "..", "..", "..", "..", ".."));
+                
+                var inputFile = Directory.GetFiles(path + @"\Input", dayName + ".txt")[0];
 
                 solution = (IDay)Activator.CreateInstance(dayType, inputFile);
             }
