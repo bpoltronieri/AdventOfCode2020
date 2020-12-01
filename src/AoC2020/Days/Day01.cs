@@ -3,7 +3,7 @@ using System.IO;
 
 namespace AoC2020.Days
 {
-    class Day01 : IDay
+    public class Day01 : IDay
     {
         private string[] input;
 

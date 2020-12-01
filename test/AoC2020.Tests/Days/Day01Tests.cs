@@ -1,5 +1,7 @@
-using System;
+using System.IO;
+using System.Reflection;
 using Xunit;
+using AoC2020.Days;
 
 namespace AoC2020.Tests.Days
 {
@@ -9,18 +11,19 @@ namespace AoC2020.Tests.Days
         public void Day01Test1()
         {
             // arrange
-            // get test input file
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            path = Path.GetFullPath(Path.Combine(path, "..", "..", ".."));
+
+            // var inputFile = Directory.GetFiles(path + @"/TestInput", "Day01_1.txt")[0]; // + @"/test/AoC2020.Tests/TestInput", "Day01_1.txt")[0];
+            // var day01 = new Day01(inputFile);
 
             // act
-            // var day01 = new Day01(testInputFile1);
             // var result1 = day01.PartOne();
             // var result2 = day01.PartTwo();
 
             // assert
-            // Assert.Equal(result1, "xyz");
-            // Assert.Equal(result2, "abc");
-
-            Assert.Equal('A', 'A');
+            // Assert.Equal("", result1);
+            // Assert.Equal("", result2);
         }
     }
 }
