@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace AoC2020.Days.Day01
+namespace AoC2020.Days
 {
     class Day01 : IDay
     {
