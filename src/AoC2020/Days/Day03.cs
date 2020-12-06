@@ -9,9 +9,9 @@ namespace AoC2020.Days
         private string[] input;
 
         public Day03(string file)
-            {
-                LoadInput(file);
-            }
+        {
+            LoadInput(file);
+        }
 
         private void LoadInput(string file)
         {

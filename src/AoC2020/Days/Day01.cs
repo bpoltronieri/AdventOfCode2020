@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 
 namespace AoC2020.Days
@@ -8,9 +7,9 @@ namespace AoC2020.Days
         private string[] input;
 
         public Day01(string file)
-            {
-                LoadInput(file);
-            }
+        {
+            LoadInput(file);
+        }
 
         private void LoadInput(string file)
         {
