@@ -39,7 +39,7 @@ namespace AoC2020.Days
                 for (var j = i+1; j < input.Length-1; j++)
                 {
                     var val2 = int.Parse(input[j]);
-                    for (var k = j+1; k < input.Length-1; k++)
+                    for (var k = j+1; k < input.Length; k++)
                         {
                         var val3 = int.Parse(input[k]);
                         if (val1 + val2 + val3 == 2020)
