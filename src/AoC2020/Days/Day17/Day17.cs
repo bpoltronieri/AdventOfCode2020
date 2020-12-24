@@ -36,26 +36,6 @@ namespace AoC2020.Days
                         throw new ArgumentException();
                     Map.Add(point, input[y][x] == '#');
                 }
-            PadMapWithInactiveNeighbours(Map);
-        }
-
-        // Pads map by adding inactive neighbours to all active points,
-        // unless its neighbours are already in the map
-        // could be sped up a lot... should only have to consider points
-        // on the edge of the map but I'm not sure how to do that given that
-        // I haven't padded evenly in every direction. Probably would be
-        // faster to just do that.
-        // Or instead of a dictionary I should just use a 2D array.
-        // Given we know the number of turns we'll run, we know the maximum
-        // size the map will need to be.
-        private void PadMapWithInactiveNeighbours(Dictionary<Point, bool> map)
-        {
-            foreach (var point in map.Keys.Where(k => ActivePoint(k, map)).ToArray())
-                foreach (var neighbour in point.Neighbours())
-                {
-                    if (!map.ContainsKey(neighbour))
-                        map.Add(neighbour, false);
-                }
         }
 
         private bool ActivePoint(Point point, Dictionary<Point, bool> map)
@@ -74,25 +54,39 @@ namespace AoC2020.Days
         private void RunCycle()
         {
             var newMap = new Dictionary<Point, bool>(Map);
+            var paddingPoints = new List<Point>();
             foreach (var point in Map.Keys)
-            {
-                var nActiveNeighbours = NActiveNeighbours(point, Map);
-                if (ActivePoint(point, Map) && 
-                    nActiveNeighbours != 2 && nActiveNeighbours != 3)
-                    newMap[point] = false;
-                else if (!ActivePoint(point, Map) && nActiveNeighbours == 3)
-                    newMap[point] = true;
-            }
+                UpdatePoint(point, newMap, paddingPoints);
+            foreach (var point in paddingPoints)
+                UpdatePoint(point, newMap, null);
             Map = newMap;
-            PadMapWithInactiveNeighbours(Map);
         }
 
-        private int NActiveNeighbours(Point point, Dictionary<Point, bool> map)
+        private void UpdatePoint(Point point, Dictionary<Point, bool> newMap, List<Point> paddingPoints)
         {
-            return point.Neighbours().Count(n => ActivePoint(n, Map));
+            var nActiveNeighbours = NActiveNeighbours(point, paddingPoints);
+            if (ActivePoint(point, Map) && 
+                nActiveNeighbours != 2 && nActiveNeighbours != 3)
+                newMap[point] = false;
+            else if (!ActivePoint(point, Map) && nActiveNeighbours == 3)
+                newMap[point] = true;
         }
 
-        // Part Two is very slow due to PadMapWithInactiveNeighbours, see note there for solutions.
+        private int NActiveNeighbours(Point point, List<Point> paddingPoints)
+        {
+            var count = 0;
+            var pointActive = ActivePoint(point, Map);
+            foreach (var neighbour in point.Neighbours())
+            {
+                if (paddingPoints != null && pointActive && !ActivePoint(neighbour, Map))
+                    paddingPoints.Add(neighbour); // neighbour might become active this turn so needs to be added to map
+                
+                if (ActivePoint(neighbour, Map))
+                    count += 1;
+            }
+            return count;
+        }
+
         public string PartTwo()
         {
             LoadMap(4);
